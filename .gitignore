@@ -6,13 +6,6 @@ client/.pnp
 client.pnp.js
 server/node_modules
 
-# testing
-client/coverage
-
-# next.js
-client/.next/
-client/out/
-
 # production
 client/build
 
@@ -20,6 +13,7 @@ client/build
 client/.DS_Store
 client/.env*
 server/.env*
+server/dist
 
 # debug
 client/npm-debug.log*

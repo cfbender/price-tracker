@@ -6,7 +6,6 @@ COPY package*.json ./
 
 RUN yarn install -qy
 COPY . .
-RUN yarn build
 
 
 EXPOSE 3000
