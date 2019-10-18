@@ -1,0 +1,27 @@
+version: '2'
+services:
+  server:
+    build:
+      context: ./server/
+    command: node src/server.js
+    volumes:
+      - ./server/:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - "5000:5000"
+    env_file: ./server/.env 
+    environment:
+      - NODE_ENV=production
+      - CHOKIDAR_USEPOLLING=true
+  client:
+    build:
+      context: ./client/
+    command: yarn start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    links:
+      - server
+    env_file: ./client/.env 
+    ports:
+      - "3000:3000"
