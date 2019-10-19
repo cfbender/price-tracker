@@ -13,6 +13,6 @@ before_install:
 before_script:
   - docker-compose up -d
 script:
-  - cd client && set CI=true && yarn test -- --coverage
+  - docker-compose run client yarn test --watchAll=false
 after_script:
   - docker-compose kill
