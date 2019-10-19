@@ -11,9 +11,8 @@ before_install:
   - yarn
 
 before_script:
-  - docker-compose up
-
+  - docker-compose up -d
 script:
-  - yarn test
+  - cd client && set CI=true && yarn test -- --coverage
 after_script:
   - docker-compose kill

@@ -5,7 +5,13 @@ import { useAuth0 } from "./react-auth0-spa";
 import PricesTable from "./components/PricesTable";
 import "./styles/App.css";
 function App() {
-  const { loading, user, isAuthenticated } = useAuth0();
+  const auth = useAuth0();
+  let loading, user, isAuthenticated;
+  if (auth) {
+    loading = auth.loading;
+    user = auth.user;
+    isAuthenticated = auth.isAuthenticated;
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -15,7 +21,7 @@ function App() {
     <div className="App">
       <NavBar />
       {!isAuthenticated && <Greeting />}
-      {!isAuthenticated && <PricesTable />}
+      {!isAuthenticated && <PricesTable user={user} />}
     </div>
   );
 }

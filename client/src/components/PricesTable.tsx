@@ -38,7 +38,7 @@ const PricesTable = (props: any) => {
       setItems(testData);
       updateLoading(false);
     }, 500);
-  }, []);
+  }, [testData]);
   return (
     <div className="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-24">
       {loading ? (

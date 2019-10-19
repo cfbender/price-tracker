@@ -2,7 +2,17 @@ import React from "react";
 import { useAuth0 } from "../react-auth0-spa";
 
 const NavBar = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const auth = useAuth0();
+  let loading, user, isAuthenticated;
+  let loginWithRedirect: Function;
+  let logout: Function;
+  if (auth) {
+    loading = auth.loading;
+    user = auth.user;
+    isAuthenticated = auth.isAuthenticated;
+    loginWithRedirect = auth.loginWithRedirect;
+    logout = auth.logout;
+  }
   return (
     <header className="flex items-center justify-between flex-wrap bg-indigo-900 shadow-md p-6">
       <h1 className=" text-3xl text-white">Price Tracker</h1>
