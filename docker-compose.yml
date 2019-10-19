@@ -9,7 +9,7 @@ services:
       - /usr/app/node_modules
     ports:
       - "5000:5000"
-    env_file: ./server/.env
+    # env_file: ./server/.env
     environment:
       - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=true
