@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <NavBar />
       {!isAuthenticated && <Greeting />}
-      {!isAuthenticated && <PricesTable user={user} />}
+      {isAuthenticated && <PricesTable user={user} />}
     </div>
   );
 }
