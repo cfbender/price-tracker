@@ -7,18 +7,19 @@ import { urlToSelector } from "./urlToSelector";
 const dataScrape = (selector: string, html: string) => {
   const data = $(selector, html).html();
   if (data) {
-    const match = data.match(/([0-9]+\.?([0-9]+)?)/);
+    const match = data.match(/(\d+(?:\.\d{1,2})?)/gm);
     if (match) {
-      return match[0];
+      let fullString = match.join("");
+      return fullString;
     } else {
-      return false;
+      return null;
     }
   }
 };
 
 export const scraper = async (url: string) => {
   if (!validator.isURL(url)) {
-    return false;
+    return null;
   }
   const browser = await puppeteer.launch({
     headless: false,
@@ -38,7 +39,7 @@ export const scraper = async (url: string) => {
       let data = selector.map(item => dataScrape(item, html));
       return data.filter(item => item)[0];
     } else {
-      return false;
+      return null;
     }
   } catch (error) {
     throw Error("Error on page retrieval");

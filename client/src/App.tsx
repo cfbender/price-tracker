@@ -4,7 +4,6 @@ import { useAuth0 } from "./react-auth0-spa";
 import NavBar from "./components/NavBar";
 import Greeting from "./components/Greeting";
 import PricesTable from "./components/PricesTable";
-import PriceInput from "./components/PriceInput";
 
 import "./styles/App.css";
 

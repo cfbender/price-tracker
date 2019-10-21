@@ -8,22 +8,35 @@ import { scraper } from "../../lib/scraper";
 import { selectors } from "../../lib/selectors";
 
 export async function updatePrices(userId: string) {
-  const data = await Item.findAll({ where: { userId } });
+  let data = await Item.findAll({ where: { userId } });
+  console.log(data);
+  data = await Promise.all(
+    data.map(async (item: any) => {
+      let newItem = item;
+      const price = await scraper(item.url);
+      if (price) {
+        newItem.currentPrice = price;
+        newItem.lowestPrice =
+          parseFloat(price) < parseFloat(newItem.lowestPrice)
+            ? price
+            : newItem.lowestPrice;
+      } else {
+        return "Error";
+      }
 
-  data.map((item: any) => {
-    let newItem = item;
-    const price = scraper(item.url);
-    newItem.currentPrice = price ? price : "Error";
-    newItem.lowestPrice =
-      price < newItem.lowestPrice ? price : newItem.lowestPrice;
+      return newItem;
+    })
+  );
 
-    return newItem;
-  });
-
-  await data.forEach(
-    async ({ currentPrice, lowestPrice, id }: { [k: string]: string }) => {
-      await Item.update({ currentPrice, lowestPrice }, { where: { id } });
-    }
+  await Promise.all(
+    data.map(
+      async ({ currentPrice, lowestPrice, id }: { [k: string]: string }) => {
+        let result = await Item.update(
+          { currentPrice, lowestPrice },
+          { where: { id } }
+        );
+      }
+    )
   );
 }
 
@@ -40,11 +53,11 @@ router.get("site/data", async (req: any, res: any) => {
 });
 
 router.post("/new", async (req: any, res: any) => {
+  console.log(req);
   const userId = req.user.sub;
   const { url, name } = req.body;
 
-  let price = scraper(url);
-
+  let price = await scraper(url);
   if (price) {
     await Item.create({
       name: name,

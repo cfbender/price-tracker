@@ -39,7 +39,10 @@ const PricesTable = (props: any) => {
   return (
     <div className="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-24">
       {loading || userLoading ? (
-        <img src={animation} alt="Loading" className="mx-auto" />
+        <div className="loadingScreen mx-auto">
+          <h2 className="text-3xl">Updating Prices...</h2>
+          <img src={animation} alt="Loading" />
+        </div>
       ) : (
         <table className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
           <thead className="text-white">
@@ -108,7 +111,7 @@ const PricesTable = (props: any) => {
         </table>
       )}
 
-      <PriceInput setItems={setItems} />
+      <PriceInput setItems={setItems} updateLoading={updateLoading} />
     </div>
   );
 };

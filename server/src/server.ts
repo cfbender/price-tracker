@@ -30,7 +30,7 @@ const checkJwt = jwt({
   algorithm: ["RS256"]
 });
 app.use(checkJwt);
-
+app.use(express.json());
 app.use(routes);
 
 app.listen(PORT, () => {
