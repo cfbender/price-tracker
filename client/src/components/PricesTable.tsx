@@ -3,6 +3,7 @@ import "../styles/PricesTable.css";
 import { useAuth0 } from "../react-auth0-spa";
 import animation from "../loading.gif";
 import TableItem from "./TableItem";
+import PriceInput from "./PriceInput";
 
 const PricesTable = (props: any) => {
   const auth = useAuth0();
@@ -106,6 +107,8 @@ const PricesTable = (props: any) => {
           </tbody>
         </table>
       )}
+
+      <PriceInput setItems={setItems} />
     </div>
   );
 };
