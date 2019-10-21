@@ -2,6 +2,7 @@ import express from "express";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
 
+import routes from "./routes";
 const app = express();
 
 const authConfig = {
@@ -28,8 +29,9 @@ const checkJwt = jwt({
   issuer: `https://${authConfig.domain}/`,
   algorithm: ["RS256"]
 });
-
 app.use(checkJwt);
+
+app.use(routes);
 
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);

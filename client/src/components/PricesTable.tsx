@@ -6,49 +6,35 @@ import TableItem from "./TableItem";
 
 const PricesTable = (props: any) => {
   const auth = useAuth0();
-  let userLoading: any, user: any;
+  let userLoading: any;
   if (auth) {
     userLoading = auth.loading;
-    user = auth.user;
   }
   const [items, setItems] = useState([{}]);
   const [loading, updateLoading] = useState(true);
-  const testData = [
-    {
-      url:
-        "https://www.amazon.com/Spectre-8th-Gen-Touchscreen-Convertible/dp/B0773JVW5Z/ref=pd_sbs_147_t_0/143-1807551-4484245?_encoding=UTF8&pd_rd_i=B0773JVW5Z&pd_rd_r=c36fbe60-43a9-47e3-9b25-efb46a37fa80&pd_rd_w=5YOZV&pd_rd_wg=8r8Oe&pf_rd_p=5cfcfe89-300f-47d2-b1ad-a4e27203a02a&pf_rd_r=MD61DDS7W3TAADC0CRMX&psc=1&refRID=MD61DDS7W3TAADC0CRMX",
-      name: "HP Spectre",
-      originalPrice: "1,286.86",
-      currentPrice: "1,286.86",
-      lowestPrice: "1,286.86",
-      id: 1
-    },
-    {
-      url:
-        "https://www.amazon.com/Spectre-8th-Gen-Touchscreen-Convertible/dp/B0773JVW5Z/ref=pd_sbs_147_t_0/143-1807551-4484245?_encoding=UTF8&pd_rd_i=B0773JVW5Z&pd_rd_r=c36fbe60-43a9-47e3-9b25-efb46a37fa80&pd_rd_w=5YOZV&pd_rd_wg=8r8Oe&pf_rd_p=5cfcfe89-300f-47d2-b1ad-a4e27203a02a&pf_rd_r=MD61DDS7W3TAADC0CRMX&psc=1&refRID=MD61DDS7W3TAADC0CRMX",
-      name: "HP Spectre",
-      originalPrice: "1,286.86",
-      currentPrice: "1,286.86",
-      lowestPrice: "1,286.86",
-      id: 2
-    },
-    {
-      url:
-        "https://www.amazon.com/Spectre-8th-Gen-Touchscreen-Convertible/dp/B0773JVW5Z/ref=pd_sbs_147_t_0/143-1807551-4484245?_encoding=UTF8&pd_rd_i=B0773JVW5Z&pd_rd_r=c36fbe60-43a9-47e3-9b25-efb46a37fa80&pd_rd_w=5YOZV&pd_rd_wg=8r8Oe&pf_rd_p=5cfcfe89-300f-47d2-b1ad-a4e27203a02a&pf_rd_r=MD61DDS7W3TAADC0CRMX&psc=1&refRID=MD61DDS7W3TAADC0CRMX",
-      name: "HP Spectre",
-      originalPrice: "1,286.86",
-      currentPrice: "1,286.86",
-      lowestPrice: "1,286.86",
-      id: 3
-    }
-  ];
+
+  const { getTokenSilently } = useAuth0();
+
   useEffect(() => {
-    setTimeout(() => {
-      setItems(testData);
-      console.log(user);
-      updateLoading(false);
-    }, 500);
-  }, [testData, user]);
+    const callApi = async () => {
+      try {
+        const token = await getTokenSilently();
+        const response = await fetch(`/api/user/data`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const responseData = await response.json();
+        updateLoading(false);
+        setItems(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    callApi();
+  }, [getTokenSilently]);
+
   return (
     <div className="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-24">
       {loading || userLoading ? (

@@ -32,7 +32,7 @@ const NavBar = () => {
           </h2>
           <img
             src={user.picture}
-            alt="User Photo"
+            alt="User"
             className="h-8 w-8 rounded-full mr-10"
           />
           <button className="text-white text-xl" onClick={() => logout()}>

@@ -1,12 +1,15 @@
-import path from "path";
-import { Router as router } from "express";
+import { Router } from "express";
+const router = Router();
+//@ts-ignore
+import { Item } from "../../../models";
 
-router.get("/user/:id", (req: any, res: any) => {
-  // validate jswt, refresh, and get user data
+router.get("/user/data", async (req: any, res: any) => {
+  let data = await Item.findAll({ where: { userId: req.user.sub } });
+  res.json(data);
 });
 
-router.post("/api/new", async (req: any, res: any) => {
+router.post("/new", async (req: any, res: any) => {
   // search for new item, and add if valid
 });
 
-module.exports = router;
+export const apiRoutes = router;
