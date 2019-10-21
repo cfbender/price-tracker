@@ -1,4 +1,5 @@
 {
   "domain": "dev-c-1dmcf8.auth0.com",
-  "clientId": "2QyXha76IColJKmKB72KF4dnFQp5DrWK"
+  "clientId": "2QyXha76IColJKmKB72KF4dnFQp5DrWK",
+  "audience": "https://api.cfb-price-tracker.herokuapp.com/"
 }

@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "../styles/PricesTable.css";
+import { useAuth0 } from "../react-auth0-spa";
 import animation from "../loading.gif";
 import TableItem from "./TableItem";
 
 const PricesTable = (props: any) => {
+  const auth = useAuth0();
+  let userLoading: any, user: any;
+  if (auth) {
+    userLoading = auth.loading;
+    user = auth.user;
+  }
   const [items, setItems] = useState([{}]);
   const [loading, updateLoading] = useState(true);
-
   const testData = [
     {
       url:
@@ -14,7 +20,8 @@ const PricesTable = (props: any) => {
       name: "HP Spectre",
       originalPrice: "1,286.86",
       currentPrice: "1,286.86",
-      lowestPrice: "1,286.86"
+      lowestPrice: "1,286.86",
+      id: 1
     },
     {
       url:
@@ -22,7 +29,8 @@ const PricesTable = (props: any) => {
       name: "HP Spectre",
       originalPrice: "1,286.86",
       currentPrice: "1,286.86",
-      lowestPrice: "1,286.86"
+      lowestPrice: "1,286.86",
+      id: 2
     },
     {
       url:
@@ -30,18 +38,20 @@ const PricesTable = (props: any) => {
       name: "HP Spectre",
       originalPrice: "1,286.86",
       currentPrice: "1,286.86",
-      lowestPrice: "1,286.86"
+      lowestPrice: "1,286.86",
+      id: 3
     }
   ];
   useEffect(() => {
     setTimeout(() => {
       setItems(testData);
+      console.log(user);
       updateLoading(false);
     }, 500);
-  }, [testData]);
+  }, [testData, user]);
   return (
     <div className="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-24">
-      {loading ? (
+      {loading || userLoading ? (
         <img src={animation} alt="Loading" className="mx-auto" />
       ) : (
         <table className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
@@ -97,7 +107,15 @@ const PricesTable = (props: any) => {
           </thead>
           <tbody className="flex-1 sm:flex-none">
             {items.map((item: any) => (
-              <TableItem {...item} />
+              <TableItem
+                name={item.name}
+                url={item.url}
+                originalPrice={item.originalPrice}
+                currentPrice={item.currentPrice}
+                lowestPrice={item.lowestPrice}
+                id={item.id}
+                key={item.id}
+              />
             ))}
           </tbody>
         </table>

@@ -16,7 +16,7 @@ const NavBar = () => {
   return (
     <header className="flex items-center justify-between flex-wrap bg-indigo-900 shadow-md p-6">
       <h1 className=" text-3xl text-white">Price Tracker</h1>
-      {!isAuthenticated && (
+      {(!isAuthenticated || loading) && (
         <button
           className="text-white text-xl"
           onClick={() => loginWithRedirect({})}
@@ -26,9 +26,19 @@ const NavBar = () => {
       )}
 
       {isAuthenticated && (
-        <button className="text-white text-xl" onClick={() => logout()}>
-          Log out
-        </button>
+        <div className="flex">
+          <h2 className="text-l text-white mr-4 my-auto">
+            Welcome, {user.given_name}!
+          </h2>
+          <img
+            src={user.picture}
+            alt="User Photo"
+            className="h-8 w-8 rounded-full mr-10"
+          />
+          <button className="text-white text-xl" onClick={() => logout()}>
+            Log out
+          </button>
+        </div>
       )}
     </header>
   );
