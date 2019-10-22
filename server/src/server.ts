@@ -33,6 +33,7 @@ app.use(checkJwt);
 app.use(express.json());
 app.use(routes);
 
+export default app;
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);
 });

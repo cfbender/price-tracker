@@ -39,9 +39,9 @@ const PricesTable = (props: any) => {
   return (
     <div className="container w-full md:w-4/5 xl:w-3/5  mx-auto px-2 mt-24">
       {loading || userLoading ? (
-        <div className="loadingScreen mx-auto">
+        <div className="loadingScreen flex flex-col content-center justify-center mx-auto">
           <h2 className="text-3xl">Updating Prices...</h2>
-          <img src={animation} alt="Loading" />
+          <img className="loading-animation" src={animation} alt="Loading" />
         </div>
       ) : (
         <table className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">

@@ -8,15 +8,14 @@
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "sqlPass",
+    "database": "prices_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+    "use_env_variable": "MYSQL_ENV",
+    "database": "prices_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "tsc && node ./dist/server.js",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",

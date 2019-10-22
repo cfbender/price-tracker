@@ -31,9 +31,9 @@
   bottom: -1px;
   height: 100%;
   width: 100%;
-  border-bottom: 3px solid #3c366b;
+  border-bottom: 3px solid #6359ad;
   transform: translateX(-100%);
-  transition: all 0.3 ease;
+  transition: all 0.3s ease;
 }
 
 .content-item,
