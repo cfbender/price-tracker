@@ -1,5 +1,6 @@
 .form {
-  width: 50%;
+  min-width: 400px;
+  max-width: 600px;
   position: relative;
   height: 75px;
   overflow: hidden;

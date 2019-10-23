@@ -55,45 +55,48 @@ const PriceInput = ({ setItems, updateLoading }: any) => {
   }
 
   return (
-    <div className="form-container flex justify-center flex-col mx-auto">
-      <form>
-        <div className="form mx-auto">
-          <input
-            type="text"
-            name="item"
-            autoComplete="off"
-            required
-            value={itemName}
-            onChange={e => updateItemName(e.target.value)}
-          />
-          <label htmlFor="item" className="label-item">
-            <span className="content-item">Item Name</span>
-          </label>
+    <div className="form-container flex justify-center mx-auto">
+      <form className="flex flex-col items-start">
+        <div className="flex flex-col items-center">
+          <div className="form mx-auto">
+            <input
+              type="text"
+              name="item"
+              autoComplete="off"
+              required
+              value={itemName}
+              onChange={e => updateItemName(e.target.value)}
+            />
+            <label htmlFor="item" className="label-item">
+              <span className="content-item">Item Name</span>
+            </label>
+          </div>
+          <div className="form mx-auto">
+            <input
+              type="text"
+              name="url"
+              autoComplete="off"
+              required
+              value={itemUrl}
+              onChange={handleUrlChange}
+              onPaste={handleUrlChange}
+            />
+            <label htmlFor="url" className="label-url">
+              <span className="content-url">Item URL</span>
+            </label>
+            {urlError && (
+              <h3 className="url-error text-red">Must be a valid URL</h3>
+            )}
+          </div>
         </div>
-        <div className="form mx-auto">
+        <div className="mt-2">
           <input
-            type="text"
-            name="url"
-            autoComplete="off"
-            required
-            value={itemUrl}
-            onChange={handleUrlChange}
-            onPaste={handleUrlChange}
+            className="item-submit bg-indigo-700 hover:bg-indigo-900 text-white font-bold py-2 px-4 rounded"
+            onClick={handleSubmit}
+            type="submit"
+            value="Add Item"
           />
-          <label htmlFor="url" className="label-url">
-            <span className="content-url">Item URL</span>
-          </label>
-          {urlError && (
-            <h3 className="url-error text-red">Must be a valid URL</h3>
-          )}
         </div>
-
-        <input
-          className="item-submit bg-indigo-700 hover:bg-indigo-900 text-white font-bold py-2 px-4 rounded"
-          onClick={handleSubmit}
-          type="submit"
-          value="Add Item"
-        />
       </form>
     </div>
   );

@@ -20,3 +20,9 @@ th:not(:last-child) {
   width: 96px;
   height: 96px;
 }
+
+/* .loadingScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */

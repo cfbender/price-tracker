@@ -29,6 +29,7 @@ const checkJwt = jwt({
   issuer: `https://${authConfig.domain}/`,
   algorithm: ["RS256"]
 });
+
 app.use(checkJwt);
 app.use(express.json());
 app.use(routes);

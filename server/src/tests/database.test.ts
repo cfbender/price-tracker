@@ -7,9 +7,13 @@ describe("GET /api/examples", function() {
   // Before each test begins, create a new request server for testing
   // & delete all examples from the db
   let connection: Server;
-  beforeEach(async function() {
+  beforeAll(async function() {
     connection = await server.listen(5000);
     return db.sequelize.sync({ force: true });
+  });
+
+  afterAll(async () => {
+    connection.close();
   });
 
   it("should find all examples", function(done) {
@@ -47,7 +51,6 @@ describe("GET /api/examples", function() {
         );
 
         // The `done` function is used to end any asynchronous tests
-        connection.close();
         done();
       });
     });
