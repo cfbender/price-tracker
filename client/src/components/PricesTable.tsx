@@ -104,6 +104,8 @@ const PricesTable = (props: any) => {
                 currentPrice={item.currentPrice}
                 lowestPrice={item.lowestPrice}
                 id={item.id}
+                items={items}
+                setItems={setItems}
                 key={item.id}
               />
             ))}

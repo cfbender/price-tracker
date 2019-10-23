@@ -9,7 +9,6 @@ import { selectors } from "../../lib/selectors";
 
 export async function updatePrices(userId: string) {
   let data = await Item.findAll({ where: { userId } });
-  console.log(data);
   data = await Promise.all(
     data.map(async (item: any) => {
       let newItem = item;
@@ -53,7 +52,6 @@ router.get("site/data", async (req: any, res: any) => {
 });
 
 router.post("/new", async (req: any, res: any) => {
-  console.log(req);
   const userId = req.user.sub;
   const { url, name } = req.body;
 
@@ -71,6 +69,16 @@ router.post("/new", async (req: any, res: any) => {
 
   const data = await updatePrices(userId);
   res.json(data);
+});
+
+router.delete("/remove/:id", async (req: any, res: any) => {
+  await Item.create({
+    where: {
+      id: req.params.id
+    }
+  });
+
+  res.sendStatus(200);
 });
 
 export const apiRoutes = router;
