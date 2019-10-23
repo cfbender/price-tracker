@@ -1,26 +1,11 @@
 version: "2"
 services:
-  server:
-    build:
-      context: ./server/
-    command: node dist/server.js
-    volumes:
-      - ./server/:/usr/app
-      - /usr/app/node_modules
+  web:
+    build: .
     ports:
-      - "5000:5000"
-    # env_file: ./server/.env
+      - "3000:5000"
+    restart: always
+    env_file: ./server/.env
     environment:
-      - NODE_ENV=production
-      - CHOKIDAR_USEPOLLING=true
-  client:
-    build:
-      context: ./client/
-    command: yarn start
-    volumes:
-      - ./client/:/usr/app
-      - /usr/app/node_modules
-    links:
-      - server
-    ports:
-      - "3000:3000"
+      NODE_ENV: production
+      PORT: 5000
