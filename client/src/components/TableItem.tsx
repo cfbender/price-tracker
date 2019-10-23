@@ -29,7 +29,7 @@ const TableItem = ({
   async function handleDelete() {
     try {
       const token = await getTokenSilently();
-      const response = await fetch(`/api/delete/${id}`, {
+      const response = await fetch(`/api/remove/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
@@ -69,7 +69,7 @@ const TableItem = ({
       </td>
       <td className="border-grey-light border hover:bg-gray-100 p-3 text-indigo-400 hover:text-indigo-600 hover:font-medium cursor-pointer">
         <button
-          className="bg-red-800 rounded text-white p-3"
+          className="sm:bg-red-800 sm:rounded sm:text-white text-red-800 sm:p-3"
           onClick={handleDelete}
         >
           Delete

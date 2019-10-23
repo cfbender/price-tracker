@@ -5,7 +5,7 @@ import validator from "validator";
 import { urlToSelector } from "./urlToSelector";
 
 const dataScrape = (selector: string, html: string) => {
-  const data = $(selector, html).html();
+  const data = $(selector, html).text();
   if (data) {
     const match = data.match(/(\d+(?:\.\d{1,2})?)/gm);
     if (match) {
@@ -42,7 +42,7 @@ export const scraper = async (url: string) => {
       return null;
     }
   } catch (error) {
-    throw Error("Error on page retrieval");
+    return null;
   } finally {
     await browser.close();
   }

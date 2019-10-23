@@ -27,7 +27,7 @@ export async function updatePrices(userId: string) {
     })
   );
 
-  await Promise.all(
+  return await Promise.all(
     data.map(
       async ({ currentPrice, lowestPrice, id }: { [k: string]: string }) => {
         let result = await Item.update(
@@ -56,6 +56,7 @@ router.post("/new", async (req: any, res: any) => {
   const { url, name } = req.body;
 
   let price = await scraper(url);
+  console.log(price);
   if (price) {
     await Item.create({
       name: name,
@@ -65,14 +66,17 @@ router.post("/new", async (req: any, res: any) => {
       originalPrice: price,
       lowestPrice: price
     });
+    const data = await updatePrices(userId);
+    //@ts-ignore
+    data.error = false;
+    res.json(data);
+  } else {
+    res.json({ error: true });
   }
-
-  const data = await updatePrices(userId);
-  res.json(data);
 });
 
 router.delete("/remove/:id", async (req: any, res: any) => {
-  await Item.create({
+  await Item.destroy({
     where: {
       id: req.params.id
     }

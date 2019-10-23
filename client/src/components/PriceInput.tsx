@@ -3,11 +3,10 @@ import { useAuth0 } from "../react-auth0-spa";
 
 import "../styles/PriceInput.css";
 
-const PriceInput = ({ setItems, updateLoading }: any) => {
+const PriceInput = ({ setItems, updateLoading, setItemError }: any) => {
   const auth = useAuth0();
-  let user: any, getTokenSilently: any;
+  let getTokenSilently: any;
   if (auth) {
-    user = auth.user;
     getTokenSilently = auth.getTokenSilently;
   }
 
@@ -16,10 +15,12 @@ const PriceInput = ({ setItems, updateLoading }: any) => {
   const [urlError, setUrlError] = useState(false);
 
   function handleUrlChange(e: any) {
-    console.log(urlError);
-    updateItemUrl(e.target.value.trim());
+    const value = e.clipboardData
+      ? e.clipboardData.getData("Text")
+      : e.target.value;
+    updateItemUrl(value);
     const regex = new RegExp(
-      /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+      /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
     );
     if (!regex.test(itemUrl)) {
       setUrlError(true);
@@ -46,7 +47,7 @@ const PriceInput = ({ setItems, updateLoading }: any) => {
           body: JSON.stringify(data)
         });
         const responseData = await response.json();
-        setItems(responseData);
+        responseData.error ? setItemError(true) : setItems(responseData);
         updateLoading(false);
       } catch (error) {
         console.error(error);
@@ -56,9 +57,9 @@ const PriceInput = ({ setItems, updateLoading }: any) => {
 
   return (
     <div className="form-container flex justify-center mx-auto">
-      <form className="flex flex-col items-start">
-        <div className="flex flex-col items-center">
-          <div className="form mx-auto">
+      <form className="flex flex-col items-start ">
+        <div className="flex  flex-col items-center">
+          <div className="form w-64 sm:w-104 mx-auto">
             <input
               type="text"
               name="item"
@@ -71,7 +72,7 @@ const PriceInput = ({ setItems, updateLoading }: any) => {
               <span className="content-item">Item Name</span>
             </label>
           </div>
-          <div className="form mx-auto">
+          <div className="form  w-64 sm:w-104 mx-auto">
             <input
               type="text"
               name="url"

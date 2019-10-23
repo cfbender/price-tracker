@@ -13,6 +13,7 @@ const PricesTable = (props: any) => {
   }
   const [items, setItems] = useState([{}]);
   const [loading, updateLoading] = useState(true);
+  const [itemError, setItemError] = useState(false);
 
   const { getTokenSilently } = useAuth0();
 
@@ -26,8 +27,19 @@ const PricesTable = (props: any) => {
           }
         });
         const responseData = await response.json();
+        if (responseData.error) {
+          setItemError(true);
+        } else {
+          responseData.forEach((item: any) => {
+            item.originalPrice === "Error" ||
+            item.currentPrice === "Error" ||
+            item.lowestPrice === "Error"
+              ? setItemError(true)
+              : setItemError(false);
+          });
+          setItems(responseData);
+        }
         updateLoading(false);
-        setItems(responseData);
       } catch (error) {
         console.error(error);
       }
@@ -46,74 +58,60 @@ const PricesTable = (props: any) => {
       ) : (
         <table className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
           <thead className="text-white">
-            <tr className="bg-indigo-600 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-              <th className="p-3 text-left">Item Name</th>
-              <th className="p-3 text-left">Current Price</th>
-              <th className="p-3 text-left">Price When Added</th>
-              <th className="p-3 text-left">Lowest Price Since Added</th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Link
-              </th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Delete
-              </th>
-            </tr>
-            <tr className="bg-indigo-600 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-              <th className="p-3 text-left">Item Name</th>
-              <th className="p-3 text-left">Current Price</th>
-              <th className="p-3 text-left">Price When Added</th>
-              <th className="p-3 text-left">Lowest Price Since Added</th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Link
-              </th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Delete
-              </th>
-            </tr>
-            <tr className="bg-indigo-600 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-              <th className="p-3 text-left">Item Name</th>
-              <th className="p-3 text-left">Current Price</th>
-              <th className="p-3 text-left">Price When Added</th>
-              <th className="p-3 text-left">Lowest Price Since Added</th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Link
-              </th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Delete
-              </th>
-            </tr>
-            <tr className="bg-indigo-600 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-              <th className="p-3 text-left">Item Name</th>
-              <th className="p-3 text-left">Current Price</th>
-              <th className="p-3 text-left">Price When Added</th>
-              <th className="p-3 text-left">Lowest Price Since Added</th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Link
-              </th>
-              <th className="p-3 text-left" style={{ width: "110px" }}>
-                Delete
-              </th>
-            </tr>
+            {items.length &&
+              items.map(i => (
+                <tr
+                  //@ts-ignore
+                  key={i.id}
+                  className="bg-indigo-600 flex flex-col flex-no-wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
+                >
+                  <th className="p-3 text-left">Item Name</th>
+                  <th className="p-3 text-left">Current Price</th>
+                  <th className="p-3 text-left">Price When Added</th>
+                  <th className="p-3 text-left">Lowest Price Since Added</th>
+                  <th className="p-3 text-left" style={{ width: "110px" }}>
+                    Link
+                  </th>
+                  <th className="p-3 text-left" style={{ width: "110px" }}>
+                    Delete
+                  </th>
+                </tr>
+              ))}
           </thead>
           <tbody className="flex-1 sm:flex-none">
-            {items.map((item: any) => (
-              <TableItem
-                name={item.name}
-                url={item.url}
-                originalPrice={item.originalPrice}
-                currentPrice={item.currentPrice}
-                lowestPrice={item.lowestPrice}
-                id={item.id}
-                items={items}
-                setItems={setItems}
-                key={item.id}
-              />
-            ))}
+            {items.length &&
+              items.map((item: any) => (
+                <TableItem
+                  name={item.name}
+                  url={item.url}
+                  originalPrice={item.originalPrice}
+                  currentPrice={item.currentPrice}
+                  lowestPrice={item.lowestPrice}
+                  id={item.id}
+                  items={items}
+                  setItems={setItems}
+                  key={item.id}
+                />
+              ))}
           </tbody>
         </table>
       )}
 
-      <PriceInput setItems={setItems} updateLoading={updateLoading} />
+      {itemError && (
+        <div className="loadingScreen flex text-center text-red-800 justify-center mx-auto">
+          <span className="text-xl">
+            There was an error with one of your items. If you just added an
+            item, it was not supported by this application. Otherwise, try to
+            delete an item with an error, or reload to try again.
+          </span>
+        </div>
+      )}
+
+      <PriceInput
+        setItems={setItems}
+        updateLoading={updateLoading}
+        setItemError={setItemError}
+      />
     </div>
   );
 };
