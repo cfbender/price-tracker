@@ -15,4 +15,4 @@ before_install:
   - mysql -e 'CREATE DATABASE prices_test;'
   -  cd server && yarn install -qy
 script:
-  - cd server && yarn test
+  - arn test
