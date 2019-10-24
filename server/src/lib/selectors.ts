@@ -1,6 +1,5 @@
 export const selectors: { [k: string]: string | string[] } = {
-  amazon:
-    "div#price table.a-lineitem tbody tr:nth-child(2) td.a-span12 span:nth-child(1)",
+  amazon: ["#priceblock_ourprice", "#priceblock_dealprice"],
   bonobos: ["span.summary---fullPrice---40MV_", ".summary---salePrice---3T4Vk"],
   target: "div[data-test='product-price']",
   bestbuy:

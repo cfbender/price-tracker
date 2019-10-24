@@ -46,7 +46,7 @@ router.get("/user/data", async (req: any, res: any) => {
   res.json(data);
 });
 
-router.get("site/data", async (req: any, res: any) => {
+router.get("/site/data", async (req: any, res: any) => {
   const data = Object.keys(selectors);
   res.json({ sites: data });
 });
@@ -56,7 +56,6 @@ router.post("/new", async (req: any, res: any) => {
   const { url, name } = req.body;
 
   let price = await scraper(url);
-  console.log(price);
   if (price) {
     await Item.create({
       name: name,

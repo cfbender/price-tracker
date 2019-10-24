@@ -20,10 +20,12 @@ const Greeting = () => {
     <div className="container mx-auto mt-6 flex flex-col items-center justify-center align-middle">
       <div className="flex flex-auto my-16 justify-center">
         <div className="greeting-text sm:flex-row  px-4 flex-col items-center sm:justify-center flex-col">
-          <h1 className="text-xl  sm:text-5xl flex-auto">
+          <h1 className="text-xl text-center sm:text-5xl  sm:text-left flex-auto">
             Welcome to the online shopping price tracker!
           </h1>
-          <p className="text-xl">Sign in above to get started.</p>
+          <p className="text-xl text-center sm:text-left">
+            Sign in above to get started.
+          </p>
         </div>
 
         <svg
