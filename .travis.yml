@@ -4,15 +4,16 @@ services:
 branches:
   only:
     - master
+env:
+  - NODE_ENV=test
+services:
+  - mysql
 cache:
   directories:
     - node_modules
 before_install:
   - yarn
-
-before_script:
-  - docker build .
 script:
-  - docker-compose run client
+  - docker-compose up
 after_script:
   - docker-compose kill
