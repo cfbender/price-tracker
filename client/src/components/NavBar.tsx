@@ -15,7 +15,7 @@ const NavBar = () => {
   }
   return (
     <header className="flex items-center justify-between flex-wrap bg-indigo-900 shadow-md p-6">
-      <h1 className=" text-3xl text-white">Price Tracker</h1>
+      <h1 className=" text-3xl text-white">Dealio</h1>
       <button
         className="bg-white hover:bg-gray-300 text-indigo-900 mr-auto ml-4 rounded-full py-2 px-2 shadow-lg"
         onClick={() =>

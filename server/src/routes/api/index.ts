@@ -2,10 +2,9 @@ import { Router } from "express";
 const router = Router();
 
 //@ts-ignore
-import { Item } from "../../../models";
+import { Item, Example } from "../../../models";
 
 import { scraper } from "../../lib/scraper";
-import { selectors } from "../../lib/selectors";
 
 export async function updatePrices(userId: string) {
   let data = await Item.findAll({ where: { userId } });
@@ -46,11 +45,6 @@ router.get("/user/data", async (req: any, res: any) => {
   res.json(data);
 });
 
-router.get("/site/data", async (req: any, res: any) => {
-  const data = Object.keys(selectors);
-  res.json({ sites: data });
-});
-
 router.post("/new", async (req: any, res: any) => {
   const userId = req.user.sub;
   const { url, name } = req.body;
@@ -82,6 +76,11 @@ router.delete("/remove/:id", async (req: any, res: any) => {
   });
 
   res.sendStatus(200);
+});
+
+router.get("/examples", async (req: any, res: any) => {
+  const data = await Example.findAll();
+  res.json(data);
 });
 
 export const apiRoutes = router;

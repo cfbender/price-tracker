@@ -33,7 +33,11 @@ const checkJwt = jwt({
   issuer: `https://${authConfig.domain}/`,
   algorithm: ["RS256"]
 }).unless({
-  path: [{ url: "/", methods: ["GET"] }, "/static"]
+  path: [
+    { url: "/", methods: ["GET"] },
+    { url: "/api/examples", methods: ["GET"] },
+    "/static"
+  ]
 });
 
 app.use(
@@ -47,7 +51,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "..", "client/build/index.html"));
 });
 
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Listening on http://localhost:${PORT}`);
+  });
+}
+
 export default app;
-app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`);
-});

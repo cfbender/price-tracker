@@ -13,7 +13,6 @@ cache:
     - node_modules
 before_install:
   - yarn
+  - mysql -e 'CREATE DATABASE prices_test;'
 script:
-  - docker-compose up
-after_script:
-  - docker-compose kill
+  - yarn test
