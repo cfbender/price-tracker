@@ -11,7 +11,8 @@ const PricesTable = (props: any) => {
   if (auth) {
     userLoading = auth.loading;
   }
-  const [items, setItems] = useState([{}]);
+  const defaultState: any[] = [];
+  const [items, setItems] = useState(defaultState);
   const [loading, updateLoading] = useState(true);
   const [itemError, setItemError] = useState(false);
 
@@ -55,46 +56,46 @@ const PricesTable = (props: any) => {
           <span className="text-3xl">Updating Prices...</span>
           <img className="loading-animation" src={animation} alt="Loading" />
         </div>
-      ) : (
+      ) : items.length ? (
         <table className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
           <thead className="text-white">
-            {items.length &&
-              items.map(i => (
-                <tr
-                  //@ts-ignore
-                  key={i.id}
-                  className="bg-indigo-600 flex flex-col flex-no-wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
-                >
-                  <th className="p-3 text-left">Item Name</th>
-                  <th className="p-3 text-left">Current Price</th>
-                  <th className="p-3 text-left">Price When Added</th>
-                  <th className="p-3 text-left">Lowest Price Since Added</th>
-                  <th className="p-3 text-left" style={{ width: "110px" }}>
-                    Link
-                  </th>
-                  <th className="p-3 text-left" style={{ width: "110px" }}>
-                    Delete
-                  </th>
-                </tr>
-              ))}
+            {items.map(i => (
+              <tr
+                //@ts-ignore
+                key={i.id}
+                className="bg-indigo-600 flex flex-col flex-no-wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
+              >
+                <th className="p-3 text-left">Item Name</th>
+                <th className="p-3 text-left">Current Price</th>
+                <th className="p-3 text-left">Price When Added</th>
+                <th className="p-3 text-left">Lowest Price Since Added</th>
+                <th className="p-3 text-left" style={{ width: "110px" }}>
+                  Link
+                </th>
+                <th className="p-3 text-left" style={{ width: "110px" }}>
+                  Delete
+                </th>
+              </tr>
+            ))}
           </thead>
           <tbody className="flex-1 sm:flex-none">
-            {items.length &&
-              items.map((item: any) => (
-                <TableItem
-                  name={item.name}
-                  url={item.url}
-                  originalPrice={item.originalPrice}
-                  currentPrice={item.currentPrice}
-                  lowestPrice={item.lowestPrice}
-                  id={item.id}
-                  items={items}
-                  setItems={setItems}
-                  key={item.id}
-                />
-              ))}
+            {items.map((item: any) => (
+              <TableItem
+                name={item.name}
+                url={item.url}
+                originalPrice={item.originalPrice}
+                currentPrice={item.currentPrice}
+                lowestPrice={item.lowestPrice}
+                id={item.id}
+                items={items}
+                setItems={setItems}
+                key={item.id}
+              />
+            ))}
           </tbody>
         </table>
+      ) : (
+        ""
       )}
 
       {itemError && (
@@ -105,6 +106,14 @@ const PricesTable = (props: any) => {
             delete an item with an error, or reload to try again.
           </span>
         </div>
+      )}
+
+      {!loading && !items.length ? (
+        <div className="loadingScreen flex text-center justify-center mx-auto">
+          <span className="text-xl">Add some items to get started!</span>
+        </div>
+      ) : (
+        ""
       )}
 
       <PriceInput
