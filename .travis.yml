@@ -4,15 +4,15 @@ services:
 branches:
   only:
     - master
+env:
+  - NODE_ENV=test
+services:
+  - mysql
 cache:
   directories:
     - node_modules
 before_install:
-  - yarn
-
-before_script:
-  - docker-compose up -d
+  - mysql -e 'CREATE DATABASE prices_test;'
+  -  cd server && yarn install -qy
 script:
-  - docker-compose run client yarn test --watchAll=false
-after_script:
-  - docker-compose kill
+  - yarn test
