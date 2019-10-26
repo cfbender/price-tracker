@@ -1,0 +1,11 @@
+{
+  "name": "price-tracker",
+  "version": "1.0.0",
+  "main": "server/dist/server.js",
+  "repository": "git@github.com:cfbender/dealio.git",
+  "author": "Cody Bender <codyfbender@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd server && yarn tsc && node ./dist/server.js"
+  }
+}
