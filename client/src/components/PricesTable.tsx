@@ -28,6 +28,7 @@ const PricesTable = (props: any) => {
           }
         });
         const responseData = await response.json();
+        console.log(responseData);
         if (responseData.error) {
           setItemError(true);
         } else {
@@ -56,15 +57,11 @@ const PricesTable = (props: any) => {
           <span className="text-3xl">Updating Prices...</span>
           <img className="loading-animation" src={animation} alt="Loading" />
         </div>
-      ) : items.length ? (
+      ) : items.length && items[0].id ? (
         <table className="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
           <thead className="text-white">
             {items.map(i => (
-              <tr
-                //@ts-ignore
-                key={i.id}
-                className="bg-indigo-600 flex flex-col flex-no-wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
-              >
+              <tr className="bg-indigo-600 flex flex-col flex-no-wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
                 <th className="p-3 text-left">Item Name</th>
                 <th className="p-3 text-left">Current Price</th>
                 <th className="p-3 text-left">Price When Added</th>

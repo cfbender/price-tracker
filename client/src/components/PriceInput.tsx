@@ -47,7 +47,11 @@ const PriceInput = ({ setItems, updateLoading, setItemError }: any) => {
           body: JSON.stringify(data)
         });
         const responseData = await response.json();
-        responseData.error ? setItemError(true) : setItems(responseData);
+        console.log(responseData);
+        if (responseData.error) {
+          setItemError(true);
+        }
+        setItems(responseData);
         updateLoading(false);
       } catch (error) {
         console.error(error);

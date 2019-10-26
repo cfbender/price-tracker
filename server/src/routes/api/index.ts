@@ -26,22 +26,22 @@ export async function updatePrices(userId: string) {
     })
   );
 
-  return await Promise.all(
+  await Promise.all(
     data.map(
       async ({ currentPrice, lowestPrice, id }: { [k: string]: string }) => {
-        let result = await Item.update(
-          { currentPrice, lowestPrice },
-          { where: { id } }
-        );
+        await Item.update({ currentPrice, lowestPrice }, { where: { id } });
       }
     )
   );
+
+  let updatedData = await Item.findAll({ where: { userId } });
+
+  return updatedData;
 }
 
 router.get("/user/data", async (req: any, res: any) => {
   const userId = req.user.sub;
-  await updatePrices(userId);
-  const data = await Item.findAll({ where: { userId } });
+  const data = await updatePrices(userId);
   res.json(data);
 });
 
@@ -60,8 +60,6 @@ router.post("/new", async (req: any, res: any) => {
       lowestPrice: price
     });
     const data = await updatePrices(userId);
-    //@ts-ignore
-    data.error = false;
     res.json(data);
   } else {
     res.json({ error: true });
