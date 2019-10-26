@@ -1,5 +1,10 @@
 export const selectors: { [k: string]: string | string[] } = {
-  amazon: ["#priceblock_ourprice", "#priceblock_dealprice"],
+  amazon: [
+    "#priceblock_ourprice",
+    "#priceblock_dealprice",
+    ".a-color-price.header-price",
+    ".offer-price"
+  ],
   bonobos: ["span.summary---fullPrice---40MV_", ".summary---salePrice---3T4Vk"],
   target: "div[data-test='product-price']",
   bestbuy:
